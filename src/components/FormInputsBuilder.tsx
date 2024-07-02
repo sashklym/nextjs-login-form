@@ -1,4 +1,4 @@
-import { useState, useCallback, useImperativeHandle, forwardRef } from "react";
+import { useState, useCallback, useImperativeHandle, forwardRef, useMemo } from "react";
 import EmailInput from "./ui/email-input/EmailInput";
 import InputWrapper, { InputValidationResult } from "./ui/input-wrapper/InputWrapper";
 import PassInput from "./ui/pass-input/PassInput";
@@ -24,9 +24,18 @@ export interface FormState {
 // Wrap the component with forwardRef
 // eslint-disable-next-line react/display-name
 const FormInputsBuilder = forwardRef(({ inputConfigs, onChange, allowShowErrors }: FormInputsProps, ref) => {
+    
+    const initialFormFields = useMemo(() => {
+        const fields = new Map<string, { isValid: boolean; value: any }>();
+        inputConfigs.forEach(config => {
+            fields.set(config.name, { isValid: false, value: '' });
+        });
+        return fields;
+    }, [inputConfigs]);
+    
     const [formState, setFormState] = useState({
-        isFormValid: true,
-        formFields: new Map<string, { isValid: boolean; value: any }>(),
+        isFormValid: false, // Form is initially invalid
+        formFields: initialFormFields,
     });
 
     const storeCurrentValue = useCallback((data: any) => {
@@ -84,7 +93,8 @@ const FormInputsBuilder = forwardRef(({ inputConfigs, onChange, allowShowErrors 
                     inputName={config.name}
                     child={renderInput(config) as React.ReactElement}
                     validator={config.validator}
-                    allowShowErrors={allowShowErrors || (config.showSuggestions || false)}
+                    allowShowErrors={allowShowErrors}
+                    showSuggestions={config.showSuggestions || false}
                 />
             ))}
         </>

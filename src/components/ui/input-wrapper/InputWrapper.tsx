@@ -15,9 +15,10 @@ interface InputWrapperProps {
     inputName: string;
     validator: (value: string) => InputValidationResult;
     allowShowErrors: boolean;
+    showSuggestions: boolean;
 }
 
-const InputWrapper: React.FC<InputWrapperProps> = ({ child, validator, allowShowErrors, inputName }) => {
+const InputWrapper: React.FC<InputWrapperProps> = ({ child, validator, allowShowErrors, inputName, showSuggestions }) => {
     const [validationRes, setValidationRes] = useState<InputValidationResult>({ isValid: true, details: [] });
     const [lastValue, setLastValue] = useState<string>('');
 
@@ -46,12 +47,21 @@ const InputWrapper: React.FC<InputWrapperProps> = ({ child, validator, allowShow
     const childWithProps = cloneElement(child, { onChange: handleOnChange });
 
     return (
-        <div className={`${allowShowErrors && lastValue ? (validationRes.isValid ? 'success' : 'error') : ''} mt-20px`}>
+        <div className={`${allowShowErrors ? (validationRes.isValid ? 'success' : 'error') : ''} mt-20px`}>
             {childWithProps}
-            {allowShowErrors && (
+            {allowShowErrors && !validationRes.isValid && (
                 <div className={`validationError mt-20px`}>
                     {validationRes.details.map((error, index) => (
-                        <div key={index} className={`${lastValue ? error.status : ''} ${index === validationRes.details.length - 1 ? 'last' : ''}`}>
+                        <div key={index} className={`${error.status} ${index === validationRes.details.length - 1 ? 'last' : ''}`}>
+                            {error.message}
+                        </div>
+                    ))}
+                </div>
+            )}
+            {!allowShowErrors && showSuggestions && (
+                <div className={`validationError sg mt-20px`}>
+                    {validationRes.details.map((error, index) => (
+                        <div key={index} className={`${index === validationRes.details.length - 1 ? 'last' : ''}`}>
                             {error.message}
                         </div>
                     ))}
