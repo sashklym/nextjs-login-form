@@ -21,13 +21,18 @@ const InputWrapper: React.FC<InputWrapperProps> = ({ child, validator, allowShow
     const [validationRes, setValidationRes] = useState<InputValidationResult>({ isValid: true, details: [] });
     const [lastValue, setLastValue] = useState<string>('');
 
+    useEffect(() => {
+        const initialValidationResult = validator('');
+        setValidationRes(initialValidationResult);
+    }, []);
+
     const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
         setLastValue(value);
         const validationResult = validator(value);
         setValidationRes(validationResult);
         if (child.props.onChange) {
-            child.props.onChange({key: inputName, isValid: validationResult.isValid, details: validationResult.details, value: value});
+            child.props.onChange({ key: inputName, isValid: validationResult.isValid, details: validationResult.details, value: value });
         }
     };
 
@@ -41,12 +46,12 @@ const InputWrapper: React.FC<InputWrapperProps> = ({ child, validator, allowShow
     const childWithProps = cloneElement(child, { onChange: handleOnChange });
 
     return (
-        <div className={`${allowShowErrors ? (validationRes.isValid ? 'success' : 'error') : ''} mt-20px`}>
+        <div className={`${allowShowErrors && lastValue ? (validationRes.isValid ? 'success' : 'error') : ''} mt-20px`}>
             {childWithProps}
-            {allowShowErrors && !validationRes.isValid && (
+            {allowShowErrors && (
                 <div className={`validationError mt-20px`}>
                     {validationRes.details.map((error, index) => (
-                        <div key={index} className={`${error.status} ${index === validationRes.details.length - 1 ? 'last' : ''}`}>
+                        <div key={index} className={`${lastValue ? error.status : ''} ${index === validationRes.details.length - 1 ? 'last' : ''}`}>
                             {error.message}
                         </div>
                     ))}

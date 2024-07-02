@@ -14,7 +14,7 @@ export default function LoginPage() {
   // Form inputs configurations
   const inputConfigs: InputConfig[] = [
     { name: 'email', type: 'email', validator: validateEmail },
-    { name: 'password', type: 'password', validator: validatePassword },
+    { name: 'password', type: 'password', validator: validatePassword, showSuggestions: true},
   ];
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {

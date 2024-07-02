@@ -4,7 +4,7 @@ export function validatePassword(password: string): InputValidationResult {
     const details: ValidationRuleResult[] = [];
 
     details.push({
-        status: password.length < 8 || password.length > 64 ? 'error' : 'success',
+        status: password.length < 8 || password.length > 64 || password.includes(' ') ? 'error' : 'success',
         message: "8 characters or more (no spaces)"
     });
 

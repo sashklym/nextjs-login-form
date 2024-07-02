@@ -29,4 +29,10 @@ describe('validatePassword', () => {
     expect(result.isValid).toBe(false);
     expect(result.details.some(detail => detail.message.includes('one digit'))).toBe(true);
   });
+
+  it('should reject a password with spaces', () => {
+    const result = validatePassword('Password 1');
+    expect(result.isValid).toBe(false);
+    expect(result.details.some(detail => detail.message.includes('no spaces'))).toBe(true);
+  });
 });

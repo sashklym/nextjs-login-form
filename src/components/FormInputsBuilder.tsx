@@ -6,6 +6,7 @@ import PassInput from "./ui/pass-input/PassInput";
 export type InputConfig = {
     name: string;
     type: string;
+    showSuggestions?: boolean;
     validator: (value: any) => InputValidationResult;
 };
 
@@ -83,7 +84,7 @@ const FormInputsBuilder = forwardRef(({ inputConfigs, onChange, allowShowErrors 
                     inputName={config.name}
                     child={renderInput(config) as React.ReactElement}
                     validator={config.validator}
-                    allowShowErrors={allowShowErrors}
+                    allowShowErrors={allowShowErrors || (config.showSuggestions || false)}
                 />
             ))}
         </>
