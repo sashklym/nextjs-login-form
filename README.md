@@ -2,7 +2,13 @@ This is a Next.js project focused on creating a Sign up form with a dynamic form
 
 ## Getting Started
 
-To run the development server:
+First, install the necessary packages:
+
+```bash
+npm install
+```
+
+Then, to run the development server:
 
 ```bash
 npm run dev
