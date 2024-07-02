@@ -3,9 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function Home() {
-  function handleClick() {
-    console.log('Do you want to try login?');
-  }
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-24">
       <div className="flex flex-col items-center justify-center">
@@ -19,7 +16,7 @@ export default function Home() {
         />
         <Link href="/login" passHref className="mt-10">
           <Button>
-            Are you ready to try login?
+            Are you ready to try sign up?
           </Button>
         </Link>
       </div>
