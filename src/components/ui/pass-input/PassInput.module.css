@@ -1,0 +1,27 @@
+.passInputContainer {
+    position: relative;
+    display: inline-block;
+}
+
+.passInput {
+    min-width: 315px;
+    height: 48px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19.36px;
+    text-align: left;
+
+    &::placeholder {
+        color: #6F91BC;
+    }
+}
+
+.toggleIcon {
+    position: absolute;
+    right: 12px;
+    top: 12px;
+    cursor: pointer;
+    opacity: 0.5;
+}

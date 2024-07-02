@@ -1,32 +1,57 @@
-import { FormEvent } from 'react';
-import { useRouter } from 'next/router';
-import Button from '@/components/ui/Button';
+import { FormEvent, useRef, useState } from 'react';
 import styles from './login.module.css';
+import Button from '@/components/ui/button/Button';
+import { InputValidationResult } from '@/components/ui/input-wrapper/InputWrapper';
+import { validatePassword } from '@/utils/validators/passwordValidator';
+import { validateEmail } from '@/utils/validators/emailValidator';
+import FormInputsBuilder, { FormState, InputConfig } from '@/components/FormInputsBuilder';
 
 export default function LoginPage() {
-  const router = useRouter();
+  const [formData, setFormData] = useState<FormState>({ isFormValid: false, formFields: new Map()});
+  const [showValidationError, setShowValidationError] = useState(false);
+  const formRef = useRef<any>(null);
+
+  // Form inputs configurations
+  const inputConfigs: InputConfig[] = [
+    { name: 'email', type: 'email', validator: validateEmail },
+    { name: 'password', type: 'password', validator: validatePassword },
+  ];
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-
-    const formData = new FormData(event.currentTarget);
-    const email = formData.get('email');
-    const password = formData.get('password');
-    console.log("🚀 ~ handleSubmit ~ email:", email)
+    setShowValidationError(true);
+    console.log("🚀 ~ handleSubmit ~ formData:", formData)
+    if (formData.isFormValid === false) {
+      return;
+    }
+    console.log(formData);
+    if (formRef.current) {
+      formRef.current.resetFormValues();
+    }
+    alert('Sign up success');
+    setShowValidationError(false);
   }
+
+  const handleFormInputChanges = (newValues: FormState) => {
+    setFormData(newValues);
+  };
 
   return (
     <div className={`flex items-center justify-center min-h-screen ${styles.bg}`}>
       <div className={`${styles.imgBg}`}></div>
-      <form onSubmit={handleSubmit} className={`${styles.formContainer} w-full max-w-md space-y-4 p-8 flex flex-col items-center`}>
+      <form onSubmit={handleSubmit} className={`${styles.formContainer} flex flex-col items-center`}>
         <h2 className={`${styles.title}`}>
           Sign up
         </h2>
-        <input type="email" name="email" placeholder="Email" required className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 mb-10" />
-        <input type="password" name="password" placeholder="Password" required className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 mb-10" />
-        <div className="flex justify-center items-center">
+        <FormInputsBuilder 
+          ref={formRef}
+          inputConfigs={inputConfigs} 
+          onChange={handleFormInputChanges}
+          allowShowErrors={showValidationError}
+        />
+        <div className="flex justify-center items-center mt-40px">
           <Button>
-            Login
+            Sign up
           </Button>
         </div>
       </form>

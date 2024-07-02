@@ -1,0 +1,99 @@
+/* global input styles */
+input {
+    min-width: 315px;
+    height: 48px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19.36px;
+    text-align: left;
+    background-color: #fff !important;
+    box-sizing: border-box;
+    border: 1px solid #fff;
+
+    min-width: 315px;
+    height: 48px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19.36px;
+    text-align: left;
+
+    &::placeholder {
+        color: #6F91BC;
+    }
+}
+
+input::placeholder {
+    color: #6F91BC;
+}
+
+/* Targeting the autofill */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-text-fill-color: #000 !important;
+    -webkit-box-shadow: 0 0 0px 1000px #fff inset !important;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+input:focus-visible {
+    background-color: #fff !important;
+    border: 1px solid #6F91BC;
+}
+
+input:focus {
+    border: 1px solid #6F91BC;
+    background-color: #fff !important;
+    outline: none;
+}
+
+.error input:not(:focus) {
+    border: 1px solid #FF8080 !important;
+    color: #FF8080 !important;
+}
+
+.error input:not(:focus)::placeholder {
+    color: #FF8080 !important;
+}
+
+.success input:not(:focus) {
+    border: 1px solid #27B274 !important;
+    color: #27B274 !important;
+}
+
+.success input:not(:focus)::placeholder {
+    color: #27B274 !important;
+}
+
+.success input[type="email"]:not(:focus) {
+    color: #27B274 !important;
+}
+
+.validationError {
+    color: #4A4E71;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 18px;
+    text-align: left;
+    padding: 0 20px;
+}
+
+.validationError div {
+    margin-bottom: 4px;
+}
+
+.validationError div:last-child {
+    margin-bottom: 0;
+}
+
+.validationError div.error {
+    color: #FF8080;
+}
+
+.validationError div.success {
+    color: #27B274;
+}
