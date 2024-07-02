@@ -21,10 +21,9 @@ export default function LoginPage() {
     event.preventDefault();
     setShowValidationError(true);
     console.log("🚀 ~ handleSubmit ~ formData:", formData)
-    if (formData.isFormValid === false) {
+    if (!formData.isFormValid) {
       return;
     }
-    console.log(formData);
     if (formRef.current) {
       formRef.current.resetFormValues();
     }
