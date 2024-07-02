@@ -35,9 +35,10 @@ input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
-    -webkit-text-fill-color: #000 !important;
+    -webkit-text-fill-color: #27B274 !important;
     -webkit-box-shadow: 0 0 0px 1000px #fff inset !important;
     transition: background-color 5000s ease-in-out 0s;
+    border: 1px solid #27B274 !important;
 }
 
 input:focus-visible {
